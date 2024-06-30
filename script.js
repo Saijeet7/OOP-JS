@@ -1,19 +1,19 @@
 "use strict";
 
-const Person = function (firstName, birthYear) {
-  // Instance properties
-  this.firstName = firstName;
-  this.birthYear = birthYear;
-};
-const jonas = new Person("Jonas", 1991);
-const matilda = new Person("Matilda", 2015);
+// const Person = function (firstName, birthYear) {
+//   // Instance properties
+//   this.firstName = firstName;
+//   this.birthYear = birthYear;
+// };
+// const jonas = new Person("Jonas", 1991);
+// const matilda = new Person("Matilda", 2015);
 
-// protoypes
-Person.prototype.calcAge = function () {
-  console.log(2024 - this.birthYear);
-};
+// // protoypes
+// Person.prototype.calcAge = function () {
+//   console.log(2024 - this.birthYear);
+// };
 
-jonas.calcAge();
+// jonas.calcAge();
 
 // Code Challenge 1
 // const Car = function (make, speed) {
@@ -81,17 +81,17 @@ jonas.calcAge();
 
 // getter and setter
 
-const account = {
-  owner: "jonas",
-  movement: [200, 530, 120],
+// const account = {
+//   owner: "jonas",
+//   movement: [200, 530, 120],
 
-  get latest() {
-    return this.movement.slice(-1).pop();
-  },
-  set latest(mov) {
-    this.movement.push(mov);
-  },
-};
+//   get latest() {
+//     return this.movement.slice(-1).pop();
+//   },
+//   set latest(mov) {
+//     this.movement.push(mov);
+//   },
+// };
 
 // console.log(account.latest);
 
@@ -119,34 +119,110 @@ const account = {
 
 // Code Challenge 2
 
-class Car {
-  constructor(make, speed) {
-    this.speed = speed;
-    this.make = make;
-  }
+// class Car {
+//   constructor(make, speed) {
+//     this.speed = speed;
+//     this.make = make;
+//   }
 
-  acceleration() {
-    this.speed += 10;
-    console.log(`${this.make} speed increased : ${this.speed}`);
-  }
+//   acceleration() {
+//     this.speed += 10;
+//     console.log(`${this.make} speed increased : ${this.speed}`);
+//   }
 
-  brake() {
-    this.speed -= 5;
-    console.log(`${this.make} speed decreased : ${this.speed}`);
-  }
-  get speedUs() {
-    return this.speed / 1.6;
-  }
+//   brake() {
+//     this.speed -= 5;
+//     console.log(`${this.make} speed decreased : ${this.speed}`);
+//   }
+//   get speedUs() {
+//     return this.speed / 1.6;
+//   }
 
-  set speedUs(speed) {
-    this.speed = speed * 1.6;
-  }
-}
+//   set speedUs(speed) {
+//     this.speed = speed * 1.6;
+//   }
+// }
 
-const ford = new Car("Ford", 120);
-console.log(ford.speedUs);
-ford.acceleration();
-ford.acceleration();
-ford.brake();
-ford.speedUs = 50;
-console.log(ford);
+// const ford = new Car("Ford", 120);
+// console.log(ford.speedUs);
+// ford.acceleration();
+// ford.acceleration();
+// ford.brake();
+// ford.speedUs = 50;
+// console.log(ford);
+
+//////////////////////// Inheritance between "Classes" : Constructors\
+
+// const Person = function (firstName, birthYear) {
+//   // Instance properties
+//   this.firstName = firstName;
+//   this.birthYear = birthYear;
+// };
+
+// // protoypes
+// Person.prototype.calcAge = function () {
+//   console.log(2024 - this.birthYear);
+// };
+
+// const Student = function (firstName, birthYear, course) {
+//   Person.call(this, firstName, birthYear);
+//   this.course = course;
+// };
+
+// Student.prototype = Object.create(Person.prototype);
+
+// Student.prototype.introduce = function () {
+//   console.log(`My name is ${this.firstName} and I study ${this.course}`);
+// };
+
+// const mike = new Student("Mike", 2000, "Computer Science");
+
+// console.log(mike);
+// mike.introduce();
+// mike.calcAge();
+
+// Code Challenge 3
+const Car = function (make, speed) {
+  this.speed = speed;
+  this.make = make;
+};
+
+Car.prototype.acceleration = function () {
+  this.speed += 10;
+  console.log(`${this.make} speed increased : ${this.speed}`);
+};
+
+Car.prototype.brake = function () {
+  this.speed -= 5;
+  console.log(`${this.make} speed decreased : ${this.speed}`);
+};
+
+const EV = function (make, speed, charge) {
+  Car.call(this, make, speed);
+  this.charge = charge;
+};
+
+EV.prototype = Object.create(Car.prototype);
+
+EV.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+};
+
+EV.prototype.accelerate = function () {
+  this.speed += 20;
+  this.charge -= 1;
+  console.log(
+    `${this.make} going at ${this.speed}km/h, with a charge of ${this.charge}`
+  );
+};
+
+const tesla = new EV("Tesla", 120, 23);
+
+tesla.accelerate();
+tesla.brake();
+tesla.chargeBattery(90);
+console.log(tesla);
+
+
+// Inheritance ES6 classes
+
