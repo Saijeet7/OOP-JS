@@ -182,47 +182,193 @@
 // mike.calcAge();
 
 // Code Challenge 3
-const Car = function (make, speed) {
-  this.speed = speed;
-  this.make = make;
-};
+// const Car = function (make, speed) {
+//   this.speed = speed;
+//   this.make = make;
+// };
 
-Car.prototype.acceleration = function () {
-  this.speed += 10;
-  console.log(`${this.make} speed increased : ${this.speed}`);
-};
+// Car.prototype.acceleration = function () {
+//   this.speed += 10;
+//   console.log(`${this.make} speed increased : ${this.speed}`);
+// };
 
-Car.prototype.brake = function () {
-  this.speed -= 5;
-  console.log(`${this.make} speed decreased : ${this.speed}`);
-};
+// Car.prototype.brake = function () {
+//   this.speed -= 5;
+//   console.log(`${this.make} speed decreased : ${this.speed}`);
+// };
 
-const EV = function (make, speed, charge) {
-  Car.call(this, make, speed);
-  this.charge = charge;
-};
+// const EV = function (make, speed, charge) {
+//   Car.call(this, make, speed);
+//   this.charge = charge;
+// };
 
-EV.prototype = Object.create(Car.prototype);
+// EV.prototype = Object.create(Car.prototype);
 
-EV.prototype.chargeBattery = function (chargeTo) {
-  this.charge = chargeTo;
-};
+// EV.prototype.chargeBattery = function (chargeTo) {
+//   this.charge = chargeTo;
+// };
 
-EV.prototype.accelerate = function () {
-  this.speed += 20;
-  this.charge -= 1;
-  console.log(
-    `${this.make} going at ${this.speed}km/h, with a charge of ${this.charge}`
-  );
-};
+// EV.prototype.accelerate = function () {
+//   this.speed += 20;
+//   this.charge -= 1;
+//   console.log(
+//     `${this.make} going at ${this.speed}km/h, with a charge of ${this.charge}`
+//   );
+// };
 
-const tesla = new EV("Tesla", 120, 23);
+// const tesla = new EV("Tesla", 120, 23);
 
+// tesla.accelerate();
+// tesla.brake();
+// tesla.chargeBattery(90);
+// console.log(tesla);
+
+//////////////////////// Inheritance ES6 classes
+// class PersonCl {
+//   constructor(fullName, birthYear) {
+//     this.fullName = fullName;
+//     this.birthYear = birthYear;
+//   }
+//   calcAge() {
+//     console.log(2024 - this.birthYear);
+//   }
+
+//   get age() {
+//     return 2024 - this.birthYear;
+//   }
+
+//   set fullName(name) {
+//     if (name.includes(" ")) this._fullName = name;
+//     else alert(`${name} is not a valid name`);
+//   }
+
+//   get fullName() {
+//     return this._fullName;
+//   }
+//   static hey() {
+//     console.log("Hey there!!");
+//   }
+// }
+
+// class StudentCl extends PersonCl {
+//   constructor(fullName, birthYear, course) {
+//     // Always needs to happen first
+//     super(fullName, birthYear);
+//     this.course = course;
+//   }
+
+//   introduce() {
+//     console.log(`My name is ${this.fullName} and I study ${this.course}`);
+//   }
+//   calcAge() {
+//     console.log(
+//       `I'm ${
+//         2024 - this.birthYear
+//       } years old, but as a student I feel more like ${
+//         2024 - this.birthYear + 10
+//       }.`
+//     );
+//   }
+// }
+
+// const martha = new StudentCl("Martha Jones", 2002, "Computer Science");
+
+// console.log(martha.fullName);
+// martha.introduce();
+// martha.calcAge();
+
+// Another Classes
+
+// class Account {
+//   constructor(owner, currency, pin) {
+//     this.owner = owner;
+//     this.currency = currency;
+//     this._pin = pin;
+//     // protected
+//     this._movements = [];
+//     this.local = navigator.language;
+
+//     console.log(`Thanks for opening an account, ${owner}`);
+//   }
+
+//   getMovements() {
+//     return this._movements;
+//   }
+
+//   // Public Interface
+//   deposit(val) {
+//     this._movements.push(val);
+//   }
+//   withdraw(val) {
+//     this.deposit(-val);
+//   }
+
+//   _approveLoan(val) {
+//     return true;
+//   }
+//   requestLoan(val) {
+//     if (this._approveLoan(val)) {
+//       this.deposit(val);
+//       console.log(`Loan approved`);
+//     }
+//   }
+// }
+
+// const acc1 = new Account("Jonas", "Eur", 1111);
+// acc1.deposit(250);
+// acc1.withdraw(140);
+// acc1.requestLoan(1000);
+
+// console.log(acc1);
+
+// ///////////// Challenge 4
+
+class Car {
+  constructor(make, speed) {
+    this.speed = speed;
+    this.make = make;
+  }
+
+  acceleration() {
+    this.speed += 10;
+    console.log(`${this.make} speed increased : ${this.speed}`);
+  }
+
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} speed decreased : ${this.speed}`);
+  }
+  get speedUs() {
+    return this.speed / 1.6;
+  }
+
+  set speedUs(speed) {
+    this.speed = speed * 1.6;
+  }
+}
+
+class EVCL extends Car {
+  #charge;
+
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
+
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+  }
+  accelerate() {
+    this.speed += 20;
+    this.#charge -= 1;
+    console.log(
+      `${this.make} going at ${this.speed}km/h, with a charge of ${this.charge}`
+    );
+  }
+}
+
+const tesla = new EVCL("Tesla", 120, 23);
 tesla.accelerate();
 tesla.brake();
 tesla.chargeBattery(90);
 console.log(tesla);
-
-
-// Inheritance ES6 classes
-
